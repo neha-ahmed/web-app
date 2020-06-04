@@ -4,13 +4,14 @@ const Schema = mongoose.Schema;
 //Bookingss Schema
 
 const BookingSchema = new Schema({
-  Username: String,
-  Price: Number,
   Day: String,
   Date: String,
-  Time: String,
-  Subject: String,
-  Status: String
+  Time:String,
+  Status:String,
+  Subject:String,
+  Username:String,
+  BookingTime:String,
+  Price:String,
 });
 
 //education schema
@@ -42,17 +43,13 @@ const ScheduleSchema = new Schema ({
   Price:String
 });
 
-const AccountSchema= new Schema({
-  totalAmount: Number,
-  amount: Number
+const AccountSchema =new Schema({
+  classID: String, //class ID (5 digit)
+  bookingID: String,
+  Price: String,
+  Date: String
 })
-// subject schema
-
-// const SubjectSchema = new Schema({
-//   subject: String
-// });
 //Teachers Schema
-
 const TeacherSchema = new Schema({
   email: {
     type: String,
@@ -71,10 +68,6 @@ const TeacherSchema = new Schema({
     type: String,
     required: false,
   },
-  age:{
-    type: Number,
-    required:false
-  },
   Qualification: {
     type: String,
     required: false,
@@ -83,9 +76,9 @@ const TeacherSchema = new Schema({
     type: String,
     required: false,
   },
-  profileImage:{
-    type:String,
-    required:false
+  City:{
+    type: String,
+    required: false,
   },
   About: {
     type: String,
@@ -111,30 +104,19 @@ const TeacherSchema = new Schema({
     type: String,
     required: false,
   },
-  subjects:{
-    type: String,
-    required: false,
-  },
   profileImage:{
-    type: String,
+    type:Buffer,
+    required:false
+  },
+  totalEarnings:{   //account earning +
+    type:Number,
     required: false,
   },
-  bookings: [],
-  education: [],
-  work: [],
+  bookings: [ ],
   schedule: [],
-  account:[]
+  education:[],
+  work:[],
+  account: [],
 });
 
 module.exports = Teacher = mongoose.model("teacher", TeacherSchema);
-
-// bookingid: [
-//   {
-//     username: String,
-//     subject: String,
-//     date: String,
-//     status: Boolean,
-//     time: String,
-//     amount: String,
-//   },
-// ],

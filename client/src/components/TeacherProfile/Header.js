@@ -34,25 +34,25 @@ function Header(props) {
                   </a>
                 </li>
                 <li class="nav-item" style={{ margin: "0px" }}>
-                  <a class="nav-link smooth-scroll" href="#education">
-                    Education
+                  <a class="nav-link smooth-scroll" href="#schedule">
+                    Schedule
                   </a>
                 </li>
-                {/* <li class="nav-item" style={{ margin: "0px" }}>
-                  <a class="nav-link smooth-scroll" href="#portfolio">
-                    Portfolio
-                  </a>
-                </li> */}
                 <li class="nav-item" style={{ margin: "0px" }}>
                   <a class="nav-link smooth-scroll" href="#experience">
                     Experience
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style={{ margin: "0px" }}>
+                  <a class="nav-link smooth-scroll" href="#education">
+                    Education
+                  </a>
+                </li>
+                {/* <li class="nav-item">
                   <a class="nav-link smooth-scroll" href="#contact">
                     Contact
                   </a>
-                </li>
+                </li> */}
               </ul>
             </nav>
             <div className="log_reg">

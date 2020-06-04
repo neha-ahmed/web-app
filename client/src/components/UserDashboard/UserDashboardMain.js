@@ -283,8 +283,8 @@ function UserDashboardMain(props) {
                                 <th className="cell100 column2">Time</th>
                                 {/* <th className="cell100 column4">Day</th> */}
                                 <th className="cell100 column5">Date</th>
-                                <th className="cell100 column5"> Price</th>
-                                <th className="cell100 column2">
+                                <th className="cell100 column5"style={{paddingLeft:"25px"}}> Price</th>
+                                <th className="cell100 column2" style={{paddingLeft:"20px"}}>
                                   {" "}
                                   ClassID
                                 </th>{" "}
@@ -313,10 +313,10 @@ function UserDashboardMain(props) {
                                       {/* <td className="cell100 column4">
                                         {data2.Day}
                                       </td> */}
-                                      <td className="cell100 column2">
-                                        {data2.Date}({data2.Day})
+                                      <td className="cell100 column2" style={{paddingLeft:"30px"}}>
+                                        {data2.Date} ({data2.Day})
                                       </td>{" "}
-                                      <td className="cell100 column8">
+                                      <td className="cell100 column7" style={{paddingLeft:"30px"}}>
                                         {data2.Price}
                                       </td>{" "}
                                       <td className="cell100 column2">

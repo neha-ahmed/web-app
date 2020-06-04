@@ -82,25 +82,7 @@
    margin: 0 auto;
    border-radius: 50%;
  }
- .newbutton3 {
-  border: none;
-  border-radius: 0.1cm;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color:#940707;
-  text-align: center;
-  cursor: pointer;
-  width: 90%;
-  transition: 0.3s;
-  margin: 10px;
-  cursor: default;
-}
-.disabledCursor {
-  cursor: default;
-  pointer-events: none;
-}
+
  .carousel .img-box img {
    width: 100%;
    height: 100%;
@@ -5180,10 +5162,36 @@
    margin: 10px;
  }
 
- .newbutton:hover {
-   background-color: purple;
+ .newbuttonx {
+   border: none;
+   border-radius: 0.1cm;
+   outline: 0;
+   display: inline-block;
+   padding: 8px;
+   color: white;
+   background-color: #360f64;
+   text-align: center;
+   cursor: pointer;
+   width: 100%;
+   transition: 0.3s;
+   margin: 10px;
  }
- .newbutton4 {
+.newbutton3 {
+  border: none;
+  border-radius: 0.1cm;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color:#940707;
+  text-align: center;
+  cursor: pointer;
+  width: 90%;
+  transition: 0.3s;
+  margin: 10px;
+ 
+}
+.newbutton4 {
   border: none;
   border-radius: 0.1cm;
   outline: 0;
@@ -5197,6 +5205,19 @@
   transition: 0.3s;
   margin: 10px;
 }
+ .disabledCursor {
+   cursor: default;
+   
+   pointer-events: none;
+ }
+ .newbutton:hover {
+   background-color: purple;
+ }
+.newbutton2:hover {
+  cursor: default;
+  pointer-events: none;
+}
+
  .cc-profile-image a {
    position: relative;
  }
@@ -5314,7 +5335,7 @@
 
  }
 
-
+ 
 
  @media (max-width: 768px) {
    .cc-reference .cc-reference-header {

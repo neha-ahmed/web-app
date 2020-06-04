@@ -24,7 +24,7 @@ export class PersonalDetails extends Component {
                     <br />
                     <div className="row"  >
                     <div className="wrap-input100 validate-input">
-                    <label className="ml-3">
+                    <label className="" style={{marginLeft:"25px"}}>
                        About You:
                         </label>
                     <textarea
@@ -39,6 +39,7 @@ export class PersonalDetails extends Component {
                         onChange={handleChange('About')}
                         />
                     </div>
+                    <br/>
                    <div className="col-md-4 ">
                    <div className="wrap-input100 validate-input">
                         <label className="ml-2">

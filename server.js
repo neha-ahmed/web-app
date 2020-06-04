@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const config = require("config");
-
 const multer = require("multer");
 const cors = require("cors");
 const utils = require("./utils");
@@ -86,14 +85,7 @@ app.use(function(req, res, next) {
     }
   });
 });
-// request handlers
-app.get("/", (req, res) => {
-  if (!req.user)
-    return res
-      .status(401)
-      .json({ success: false, message: "Invalid user to access it." });
-  res.send("Welcome to the Node.js Tutorial! - " + req.user.name);
-});
+
 // validate the user credentials
 app.post("/users/signin", function(req, res) {
   const user = req.body.email;
@@ -279,6 +271,74 @@ app.get("/verifyToken", function(req, res) {
     return res.json({ user: userObj, token });
   });
 });
+
+const http = require("http");
+ 
+const socketio = require("socket.io");
+ 
+
+const { addUser, removeUser, getUser, getUsersInRoom } = require("./routes/api/userfunctions");
+
+const router = require("./router");
+
+ 
+const server = http.createServer(app);
+const io = socketio(server);
+
+app.use(cors());
+app.use(router);
+
+io.on("connect", (socket) => {
+  socket.on("join", ({ name, room }, callback) => {
+    const { error, user } = addUser({ id: socket.id, name, room });
+
+    if (error) return callback(error);
+
+    socket.join(user.room);
+
+    socket.emit("message", {
+      user: "admin",
+      text: `Hello,${user.name}, Welcome to room Professor.`,
+    });
+    socket.broadcast
+      .to(user.room)
+      .emit("message", { user: "admin", text: `${user.name} has joined!` });
+
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUsersInRoom(user.room),
+    });
+
+    callback();
+  });
+
+  socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
+
+    io.to(user.room).emit("message", { user: user.name, text: message });
+
+    callback();
+  });
+
+  socket.on("disconnect", () => {
+    const user = removeUser(socket.id);
+
+    if (user) {
+      io.to(user.room).emit("message", {
+        user: "Admin",
+        text: `${user.name} has left.`,
+      });
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUsersInRoom(user.room),
+      });
+    }
+  });
+});
+
+server.listen(process.env.PORT || 50001, () =>
+  console.log(`Server has started.`)
+);
 
 
 //Port

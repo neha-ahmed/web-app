@@ -5,7 +5,6 @@ const db = require("../../server").getDB;
 const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
-const fileUpload = require('../../middleware/file-upload');
 //item model
 const Teacher = require("../../models/Teachers");
 
@@ -18,10 +17,10 @@ router.get("/", (req, res) => {
 router.get("/search", (req, res) => {
   let Qualification = req.query.name;
   let Price = req.query.price;
-  // console.log(Price);
+  console.log(Price);
   //let name = "Ali Aman";
   //req.query.name;
-  // console.log("yahya");
+  console.log("yahya");
 
   //console.log(req.query.name);
   if (!Qualification) {
@@ -40,7 +39,7 @@ router.get("/searchbyid", (req, res) => {
 
   //let name = "Ali Aman";
   //req.query.name;
-  // console.log(_id);
+  console.log(_id);
   //console.log(req.query.name);
   if (_id) {
     Teacher.find({ _id })
@@ -56,10 +55,10 @@ router.get("/dash", (req, res) => {
 
   console.log(_id);
   let Price = req.query.price;
-  // console.log(Price);
+  console.log(Price);
   //let name = "Ali Aman";
   //req.query.name;
-  // console.log("yahya");
+  console.log("yahya");
 
   //console.log(req.query.name);
   if (!_id) {
@@ -82,7 +81,7 @@ router.get("/search2", (req, res) => {
   let DayTime = Day + sep + Time;
   //let name = "Ali Aman";
   //req.query.name;
-  // console.log("emad");
+  console.log("emad");
   console.log(DayTime);
   console.log(Qualification);
   console.log(Time);
@@ -113,34 +112,12 @@ router.get("/search2", (req, res) => {
 });
 
 //Post method teac
-// router.post("/", (req, res) => {
-//   console.log(req.body);
-//   var data = {
-//     username: "emad",
-//     amount: 0,
-//   };
-//   const newTeacher = new Teacher({
-//     name: req.body.name,
-//     Qualification: req.body.Qualification,
-//     Qualification2: req.body.Qualification,
-//     Rating: req.body.Rating,
-//     About: req.body.About,
-//     Price: req.body.Price,
-//     DayTime: req.body.DayTime,
-//     Day: req.body.Day,
-//     Time: req.body.Time,
-//     email: req.body.email,
-//     password: req.body.password,
-//     bookings: data,
-//   });
-
-//   newTeacher.save().then((teacher) => res.json(teacher));
-// }); 
-
-router.post("/asb", (req, res) => {
-  const { name, email, password } = req.body;
+router.post("/", (req, res) => {
   console.log(req.body);
-  
+  var data = {
+    username: "emad",
+    amount: 0,
+  };
   const newTeacher = new Teacher({
     name: req.body.name,
     Qualification: req.body.Qualification,
@@ -151,114 +128,14 @@ router.post("/asb", (req, res) => {
     DayTime: req.body.DayTime,
     Day: req.body.Day,
     Time: req.body.Time,
-    age:req.body.age,
     email: req.body.email,
     password: req.body.password,
-    subjects: req.body.subjects,
-
-    bookings:req.body.bookings,
-    schedule:req.body.schedule,
-    education: req.body.education,
-    work:req.body.work
-    // bookings: [
-    //   // {
-    //   //   Day:req.body.bookings[0].Day,
-    //   //   Date: req.body.bookings[0].Date,
-    //   //   Time: req.body.bookings[0].Time,
-    //   //   Subject: req.body.bookings[0].Subject,
-    //   //  Price: req.body.bookings[0].Price,
-    //   //  Username: req.body.bookings[0].Username,
-    //   //  Status: req.body.bookings[0].Status
-    //   // }
-    // ],
-    // schedule:[
-    //   // {
-    //   //   Day:req.body.schedule[0].Day,
-    //   //   Date: req.body.schedule[0].Date,
-    //   //   Time: req.body.schedule[0].Time,
-    //   //   Subject: req.body.schedule[0].Subject,
-    //   //  Price: req.body.schedule[0].Price
-    //   // }
-    // ],
-    // work: [
-    //   // {
-    //   //   title: req.body.work[0].title,
-    //   //   startDate: req.body.work[0].startDate,
-    //   //   endDate: req.body.work[0].endDate,
-    //   //   details: req.body.work[0].details
-    //   // }
-    // ],
-    // education: [],
-    // //[
-    //   //{
-    //     // level: req.body.education[0].level,
-    //     // institute:  req.body.education[0].institute,
-    //     // startDate:  req.body.education[0].startDate,
-    //     // endDate:  req.body.education[0].endDate,
-    //     // field:  req.body.education[0].field
-    //   //}
-    // //],
+    bookings: data,
   });
-  if (!name || !email || !password) {
-    return res.status(404).json({ msg: "please enter everthing" });
-  }
-  Teacher.findOne({ email })
-  .then(teacher => {
-    if (teacher) {
-      return res.status(400).json({ 
-        msg: "teacher already exist" 
-      });
-    }
 
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newTeacher.password, salt, (err, hash) => {
-        if (err) {
-          return res.status(500).json({
-            error: err
-          });
-        }
-        newTeacher.password = hash;
-        newTeacher.save().then(teacher =>{
-          console.log("hello im new");
-          jwt.sign(
-            {
-              id: teacher.id
-            },
-            config.get("jwtSecret"),
-            //{ expiresIn: 3600 },
-            (err, token) => {
-              if (err) throw err;
-              res.json({
-                token,
-                teacher: {
-                  id: teacher.id,
-                  name: teacher.name,
-                  email: teacher.email,
-                  
-                }
-              });
-            }
-          );
-        })
-      });
-    })
-  }) //.then ends
-
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({
-      error: err
-    });
-  });   //.catch ends
-
+  newTeacher.save().then((teacher) => res.json(teacher));
 }); 
 
-router.post("/newapi", (req, res) =>{
-  const name=req.query.name; 
-console.log(name);
-console.log("emad bad");
-})
- 
 //Add teacher schedule details to database
 router.put("/ids", function (req, res) {
   var id = req.query.id;
@@ -400,18 +277,18 @@ router.put("/booked", function (req, res) {
       if(foundObject.schedule._id=buttonid){
         console.log(foundObject.schedule._id,"---------");
          
-          var data = {
-            _id: foundObject.schedule._id,
-            Subject: req.query.Subject,
-            Day: req.query.Day,
-            Date: req.query.Date,
-            Time: req.query.Time,
-            Status: "Booked",
-            Price:req.query.Price,
-            Username: req.query.username,
-            Classid: req.query.classid,
-            Studentid:ObjectId(req.query.userid)
-          };
+        var data = {
+          _id: foundObject.schedule._id,
+          Subject: req.query.Subject,
+          Day: req.query.Day,
+          Date: req.query.Date,
+          Time: req.query.Time,
+          Status: "Booked",
+          Price:req.query.Price,
+          Username: req.query.username,
+          Classid: req.query.classid,
+          Studentid:ObjectId(req.query.userid)
+        };
        Teacher.updateOne(
          { _id: new ObjectId(id) },
          { $push: { bookings:data } },
@@ -460,11 +337,11 @@ router.delete("/delete", function (req, res) {
   );
 });
 
-//Cancel booking
+//Cancel
 router.put("/cancel", function (req, res) {
   var id = req.query.id;
   var buttonid = req.query.buttonid;
-  // console.log("cancel");
+  // console.log("emad");
   // console.log(buttonid);
   Teacher.updateOne(
     { "bookings._id": buttonid },
@@ -474,8 +351,6 @@ router.put("/cancel", function (req, res) {
       if (err) {
         console.log(err);
       } else {
-        //  console.log(foundObject,"ans");
-        // console.log("statusupdates");
         console.log("cancel teacherrr");
       }
     }
@@ -503,7 +378,7 @@ router.put("/cancel2", function (req, res) {
     }
   );
 });
-//Book 
+//Book
 router.put("/book", function (req, res) {
   var id = req.query.id;
   var buttonid = req.query.buttonid;
@@ -524,6 +399,7 @@ router.put("/book", function (req, res) {
   );
 });
 
+//book 2
 router.put("/book2", function (req, res) {
   var id = req.query.id;
   var buttonid = req.query.buttonid;
@@ -568,4 +444,120 @@ router.put("/end",function(req,res){
   );
 
 })
+
+
+router.post("/asb", (req, res) => {
+  const { name, email, password } = req.body;
+  console.log(req.body);
+
+  const newTeacher = new Teacher({
+    name: req.body.name,
+    // Qualification: req.body.Qualification,
+    // Qualification2: req.body.Qualification,
+    // Rating: req.body.Rating,
+    About: req.body.About,
+    Price: req.body.Price,
+    City: req.body.City,
+    // DayTime: req.body.DayTime,
+    // Day: req.body.Day,
+    // Time: req.body.Time,
+    age: req.body.age,
+    email: req.body.email,
+    password: req.body.password,
+    subjects: req.body.subjects,
+
+    bookings: req.body.bookings,
+    schedule: req.body.schedule,
+    education: req.body.education,
+    work: req.body.work,
+    // bookings: [
+    //   // {
+    //   //   Day:req.body.bookings[0].Day,
+    //   //   Date: req.body.bookings[0].Date,
+    //   //   Time: req.body.bookings[0].Time,
+    //   //   Subject: req.body.bookings[0].Subject,
+    //   //  Price: req.body.bookings[0].Price,
+    //   //  Username: req.body.bookings[0].Username,
+    //   //  Status: req.body.bookings[0].Status
+    //   // }
+    // ],
+    // schedule:[
+    //   // {
+    //   //   Day:req.body.schedule[0].Day,
+    //   //   Date: req.body.schedule[0].Date,
+    //   //   Time: req.body.schedule[0].Time,
+    //   //   Subject: req.body.schedule[0].Subject,
+    //   //  Price: req.body.schedule[0].Price
+    //   // }
+    // ],
+    // work: [
+    //   // {
+    //   //   title: req.body.work[0].title,
+    //   //   startDate: req.body.work[0].startDate,
+    //   //   endDate: req.body.work[0].endDate,
+    //   //   details: req.body.work[0].details
+    //   // }
+    // ],
+    // education: [],
+    // //[
+    //   //{
+    //     // level: req.body.education[0].level,
+    //     // institute:  req.body.education[0].institute,
+    //     // startDate:  req.body.education[0].startDate,
+    //     // endDate:  req.body.education[0].endDate,
+    //     // field:  req.body.education[0].field
+    //   //}
+    // //],
+  });
+  if (!name || !email || !password) {
+    return res.status(404).json({ msg: "please enter everthing" });
+  }
+  Teacher.findOne({ email })
+    .then((teacher) => {
+      if (teacher) {
+        return res.status(400).json({
+          msg: "teacher already exist",
+        });
+      }
+
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newTeacher.password, salt, (err, hash) => {
+          if (err) {
+            return res.status(500).json({
+              error: err,
+            });
+          }
+          newTeacher.password = hash;
+          newTeacher.save().then((teacher) => {
+            console.log("hello im new");
+            jwt.sign(
+              {
+                id: teacher.id,
+              },
+              config.get("jwtSecret"),
+              //{ expiresIn: 3600 },
+              (err, token) => {
+                if (err) throw err;
+                res.json({
+                  token,
+                  teacher: {
+                    id: teacher.id,
+                    name: teacher.name,
+                    email: teacher.email,
+                  },
+                });
+              }
+            );
+          });
+        });
+      });
+    }) //.then ends
+
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    }); //.catch ends
+});
 module.exports = router;

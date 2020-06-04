@@ -175,7 +175,7 @@ td {
 }
 
 .column2 {
-    width: 20%;
+    width: 13%;
 }
 
 .column3 {
@@ -183,21 +183,17 @@ td {
 }
 
 .column4 {
-    width: 15%;
+    width: 13%;
 }
 
 .column5 {
-    width: 25%;
+    width: 10%;
 }
 .column6 {
     width: 13%;
 }
 .column7 {
     width: 13%;
-}
-.column8 {
-    width: 13%;
-    padding: 37px;
 }
 .table100-head th {
     padding-top: 18px;
@@ -214,7 +210,6 @@ td {
 .table100 {
     position: relative;
     padding-top: 60px;
-    
 }
 
 .table100-head {
